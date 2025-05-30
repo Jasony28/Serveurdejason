@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Classement de mes amis Discord</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Police jolie -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+    <!-- Ton CSS custom, adapte le chemin si besoin -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Ajout custom pour fond */
+        body {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            min-height: 100vh;
+            background: url('fondindex.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+        .main-container {
+            max-width: 1100px;
+            margin: 60px auto 0 auto;
+            background: rgba(30, 33, 36, 0.91);
+            border-radius: 28px;
+            padding: 40px 24px 30px 24px;
+            box-shadow: 0 6px 40px #000a;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            color: #4dd0ff;
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 3px 18px #000b;
+        }
+        .desc-page {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #b4d2ef;
+            font-size: 1.15em;
+        }
+        #friends-container {
+            margin-top: 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 26px;
+            justify-content: center;
+            min-height: 170px;
+        }
+        .btn-main {
+            background: linear-gradient(90deg, #4dd0ff 10%, #7289da 90%);
+            color: #182135 !important;
+            font-size: 1.18em;
+            padding: 15px 38px;
+            border-radius: 17px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 3px 18px #7289da55, 0 1.5px 8px #38d8e933;
+            letter-spacing: 0.6px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 auto 20px auto;
+            transition: background 0.2s, color 0.2s, box-shadow 0.23s, transform 0.11s;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+        .btn-main:before {
+            content: '';
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, #fff7 0%, #7289da33 100%);
+            opacity: 0.4;
+            border-radius: 50%;
+            transition: transform 0.6s cubic-bezier(.55,.08,.53,.95);
+            z-index: 0;
+        }
+        .btn-main:hover:before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .btn-main:hover, .btn-main:focus {
+            background: linear-gradient(90deg, #38d8e9 20%, #4dd0ff 100%);
+            color: #071427 !important;
+            box-shadow: 0 10px 40px #4dd0ff55, 0 1.5px 12px #7289da44;
+            transform: translateY(-3px) scale(1.04);
+        }
+        .btn-main:active {
+            filter: brightness(0.97);
+            transform: scale(0.98);
+        }
+        @media (max-width: 900px) {
+            .main-container { padding: 18px 4vw 18px 4vw; }
+            #friends-container { gap: 12px; }
+        }
+        @media (max-width: 700px) {
+            .main-container { margin: 24px 0 0 0; border-radius: 0; }
+            #friends-container { gap: 9px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <h1>Classement Discord</h1>
+        <div class="desc-page">
+            Découvre la moyenne et les skills de tes amis sur chaque jeu !<br>
+            Clique sur “Voir tous les amis” pour commencer, puis sur une carte pour voir le détail ou comparer !
+        </div>
+     <div style="width:100%;display:flex;justify-content:flex-start;margin-bottom:8px;">
+  <button id="btn-accueil" class="btn-main">🏠 Accueil</button>
+</div>   
+<div style="display:flex;gap:24px;justify-content:center;margin-bottom:16px;">
+  <button id="show-all-friends" class="btn-main">👥 Voir tous les amis</button>
+  <button id="btn-classements" class="btn-main">🏆 Voir les classements</button>
+  <button id="btn-retour" class="btn-main" style="display:none;">⬅️ Retour</button>
+</div>
+
+        <div id="friends-container"></div>
+    </div>
+    <!-- Ton script classement.js -->
+    <script src="classement.js"></script>
+</body>
+</html>

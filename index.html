@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Menu principal</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Police jolie -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body.fond-classement {
+            margin: 0;
+            font-family: 'Montserrat', Arial, sans-serif;
+            min-height: 100vh;
+            background: url('fondindex.png') no-repeat center center fixed;
+            background-size: cover;
+            color: #fff;
+        }
+        .main-container {
+            max-width: 1100px;
+            margin: 60px auto 0 auto;
+            background: rgba(30, 33, 36, 0.91);
+            border-radius: 28px;
+            padding: 40px 24px 30px 24px;
+            box-shadow: 0 6px 40px #000a;
+        }
+        h1 {
+            text-align: center;
+            font-size: 2.8em;
+            color: #4dd0ff;
+            margin-bottom: 10px;
+            letter-spacing: 1.5px;
+            text-shadow: 0 3px 18px #000b;
+        }
+        .desc-page {
+            text-align: center;
+            margin-bottom: 35px;
+            color: #b4d2ef;
+            font-size: 1.15em;
+        }
+        /* Style boutons style classement */
+        .btn-main {
+            background: linear-gradient(90deg, #4dd0ff 10%, #7289da 90%);
+            color: #182135 !important;
+            font-size: 1.18em;
+            padding: 15px 38px;
+            border-radius: 17px;
+            text-decoration: none;
+            font-weight: 700;
+            border: none;
+            box-shadow: 0 3px 18px #7289da55, 0 1.5px 8px #38d8e933;
+            letter-spacing: 0.6px;
+            cursor: pointer;
+            display: inline-block;
+            margin: 0 auto 20px auto;
+            transition: background 0.2s, color 0.2s, box-shadow 0.23s, transform 0.11s;
+            outline: none;
+            position: relative;
+            overflow: hidden;
+            display: block;
+        }
+        .btn-main:before {
+            content: '';
+            position: absolute;
+            left: 50%; top: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            width: 300%;
+            height: 300%;
+            background: radial-gradient(circle, #fff7 0%, #7289da33 100%);
+            opacity: 0.4;
+            border-radius: 50%;
+            transition: transform 0.6s cubic-bezier(.55,.08,.53,.95);
+            z-index: 0;
+        }
+        .btn-main:hover:before {
+            transform: translate(-50%, -50%) scale(1);
+        }
+        .btn-main:hover, .btn-main:focus {
+            background: linear-gradient(90deg, #38d8e9 20%, #4dd0ff 100%);
+            color: #071427 !important;
+            box-shadow: 0 10px 40px #4dd0ff55, 0 1.5px 12px #7289da44;
+            transform: translateY(-3px) scale(1.04);
+        }
+        .btn-main:active {
+            filter: brightness(0.97);
+            transform: scale(0.98);
+        }
+        /* Cartes d'appli */
+        .app-card {
+            background: rgba(40, 44, 53, 0.97);
+            border-radius: 22px;
+            box-shadow: 0 4px 22px #0006;
+            padding: 30px 25px 22px 25px;
+            margin: 24px 14px;
+            min-width: 310px;
+            max-width: 370px;
+            flex: 1 1 330px;
+            transition: transform 0.16s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 10px;
+        }
+        .app-card h2 {
+            margin: 0 0 10px 0;
+            font-size: 1.7em;
+            color: #4dd0ff;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .app-card p {
+            margin: 0 0 16px 0;
+            font-size: 1.08em;
+            color: #b4d2ef;
+            flex: 1 1 auto;
+        }
+        .app-open-btn {
+            margin-top: 8px;
+            font-size: 1.12em;
+            width: 100%;
+            text-align: center;
+        }
+        /* Liste d'applis */
+        #apps-list {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 38px;
+            margin-top: 30px;
+        }
+        @media (max-width: 900px) {
+            .main-container { padding: 18px 4vw 18px 4vw; }
+            #apps-list { gap: 18px; }
+            .app-card { min-width: 260px; max-width: 98vw; }
+        }
+        @media (max-width: 700px) {
+            .main-container { margin: 24px 0 0 0; border-radius: 0; }
+            #apps-list { gap: 9px; }
+        }
+    </style>
+</head>
+<body class="fond-classement">
+    <div class="main-container">
+        <h1>Menu principal</h1>
+        <div class="desc-page">Choisis ton application !</div>
+        <div id="apps-list"></div>
+    </div>
+    <script src="apps.js"></script>
+
+    <!-- MODAL POUR SCREAMER -->
+    <div id="screamer-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:99999;background:#000;justify-content:center;align-items:center;">
+        <img id="screamer-img" src="screamer.png" style="width:100vw;height:100vh;object-fit:cover;display:none;position:absolute;top:0;left:0;" />
+        <audio id="screamer-audio" src="screamer.mp3" preload="auto"></audio>
+        <button id="screamer-retour" class="btn-main" style="display:none;position:absolute;top:34px;right:38px;z-index:100000;">Retour</button>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const btn = document.getElementById('btn-screamer');
+        if (!btn) return;
+        btn.onclick = function() {
+            btn.disabled = true;
+            setTimeout(function() {
+                const modal = document.getElementById('screamer-modal');
+                const img = document.getElementById('screamer-img');
+                const audio = document.getElementById('screamer-audio');
+                const retourBtn = document.getElementById('screamer-retour');
+                modal.style.display = 'flex';
+                img.style.display = 'block';
+                retourBtn.style.display = 'block';
+                if (modal.requestFullscreen) modal.requestFullscreen();
+                else if (modal.webkitRequestFullscreen) modal.webkitRequestFullscreen();
+                else if (modal.mozRequestFullScreen) modal.mozRequestFullScreen();
+                else if (modal.msRequestFullscreen) modal.msRequestFullscreen();
+
+                audio.currentTime = 0;
+                audio.volume = 1;
+                audio.muted = false;
+                audio.play();
+
+                // Fonction pour fermer le screamer (aussi par le bouton Retour)
+                function fermerScreamer() {
+                    if (document.exitFullscreen) document.exitFullscreen();
+                    modal.style.display = 'none';
+                    img.style.display = 'none';
+                    retourBtn.style.display = 'none';
+                    audio.pause();
+                }
+
+                // Fermeture auto après 2 sec
+                const autoClose = setTimeout(fermerScreamer, 2000);
+
+                retourBtn.onclick = function() {
+                    clearTimeout(autoClose);
+                    fermerScreamer();
+                };
+            }, 5000);
+        };
+    });
+    </script>
+</body>
+</html>
